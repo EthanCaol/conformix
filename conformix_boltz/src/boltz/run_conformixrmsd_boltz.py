@@ -137,40 +137,43 @@ def main():
     # --- 4. Prepare Parameters for Guided Sampling ---
     twist_target_values = np.linspace(args.twist_target_start, args.twist_target_stop, args.num_twist_targets).tolist()
     
-    params = {
-        "data": str(args.fasta_path),
-        "out_dir": str(args.out_dir),
-        "model_module": model_module,
-        "diffusion_samples": args.samples_per_target,
-        "twist_target_values": twist_target_values,
-        "twist_strength_values": args.twist_strength,
-        "tstart_step": args.tstart,
-        "tstop_step": args.tstop,
-        "output_format": "mmcif",
-        "accelerator": args.accelerator,
-        "devices": args.devices,
-        "cache": args.cache,
-        "input_cif": str(reference_cif_path),
-        "subset_residues": args.subset_residues,
-    }
+    twisted_params = dict(
+        data=str(args.fasta_path),
+        out_dir=str(args.out_dir),
+        model_module=model_module,
+        diffusion_samples=args.samples_per_target,
+        twist_target_values=twist_target_values,
+        twist_strength_values=args.twist_strength,
+        tstart_step=args.tstart,
+        tstop_step=args.tstop,
+        output_format="mmcif",
+        accelerator=args.accelerator,
+        devices=args.devices,
+        cache=args.cache,
+        input_cif=str(reference_cif_path),
+        subset_residues=args.subset_residues,
+        override=True,
+    )
 
     # Control RMSD calculation scope
     if args.structured_regions_only:
         print("INFO: Guiding RMSD on structured regions (alpha-helices and beta-sheets).")
     else:
         print("INFO: Guiding RMSD on all backbone atoms in the full sequence.")
-        params["twist_rmsd_full_sequence"] = True
+        twisted_params["twist_rmsd_full_sequence"] = True
 
 
     # --- 5. Run Guided Sampling ---
     print(f"\nStarting guided sampling with {len(twist_target_values)} target values...")
     print(f"Target RMSDs (Å): {[f'{v:.2f}' for v in twist_target_values]}")
     try:
-        run_twisted.predict.callback(**params)
+        run_twisted.predict.callback(**twisted_params)
         print("\n✅ Guided sampling generation complete!")
         print(f"Results saved in: {args.out_dir}")
     except Exception as e:
         print(f"\n❌ An error occurred during prediction: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
     # --- 6. Filter generated samples ---

@@ -765,7 +765,7 @@ def predict(
     download(cache)
 
     # Validate inputs
-    data = check_inputs(data, out_dir, override)
+    data = check_inputs(data, out_dir, override=True) # here always override
     if not data:
         click.echo("No predictions to run, exiting.")
         return 
@@ -1047,8 +1047,11 @@ def predict(
             for j in range(len(twist_target_values)):
                 for tstart in tstart_values:
                     for tstop in tstop_values:
+
                         print(f"Running with input structure {input_cif}")
                         print(f"Running variation {twist_strength_values[i]}, {twist_target_values[j]}, tstart {tstart}, tstop {tstop}")
+
+                        full_output_dir = out_dir / "predictions" / desc_string / f"variation_alpha_{twist_strength_values[i]}_beta_{twist_target_values[j]}"
 
                         # Create dictionary with added information about twisting
                         input_dict = {
@@ -1070,8 +1073,6 @@ def predict(
                                     ),
                             out["pdistogram"]
                         )
-
-                        full_output_dir = out_dir / "predictions" / desc_string / f"variation_alpha_{twist_strength_values[i]}_beta_{twist_target_values[j]}"
 
                         pred_writer = BoltzWriter(
                             data_dir=processed.targets_dir,
