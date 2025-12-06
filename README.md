@@ -1,6 +1,6 @@
 # ConforMix: Unlocking hidden biomolecular conformational landscapes in diffusion models at inference time ([arXiv link](https://arxiv.org/abs/2512.03312v1))
 
-![conformix_sampling_examples](https://github.com/user-attachments/assets/eb3d7733-5753-45ae-a334-ae4a1f3c7402)
+![Examples of ConforMixRMSD sampling](./conformix_sampling_examples.gif)
 
 The above shows protein conformation samples generated from ConforMix-RMSD-Boltz. ConforMix is an inference-time enhanced sampling algorithm for biomolecular diffusion models. It uses [Twisted Diffusion Sampler](https://github.com/blt2114/twisted_diffusion_sampler) to generate samples conditioned on features of the structure. In one instantiation, ConforMix-RMSD, we scan for protein flexibility/motion by generating samples that are distinct (by RMSD) from the default prediction. 
 
