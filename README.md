@@ -1,11 +1,6 @@
-https://github.com/user-attachments/assets/f82138e6-15f0-4724-82a0-93794eaee38a
-# ConforMix ([arXiv link](https://arxiv.org/pdf/2512.03312v1))
+# ConforMix: Unlocking hidden biomolecular conformational landscapes in diffusion models at inference time ([arXiv link](https://arxiv.org/abs/2512.03312v1))
 
-https://github.com/user-attachments/assets/8472ebf1-7913-44e5-81d3-1bb5dcfa37c9
-
-https://github.com/user-attachments/assets/ca830613-af60-4d5b-bc81-5dc6361b91a4
-
-https://github.com/user-attachments/assets/9e9606ba-04fe-4cd0-9159-bc685a50361e
+![conformix_sampling_examples](https://github.com/user-attachments/assets/eb3d7733-5753-45ae-a334-ae4a1f3c7402)
 
 The above shows protein conformation samples generated from ConforMix-RMSD-Boltz. ConforMix is an inference-time enhanced sampling algorithm for biomolecular diffusion models. It uses [Twisted Diffusion Sampler](https://github.com/blt2114/twisted_diffusion_sampler) to generate samples conditioned on features of the structure. In one instantiation, ConforMix-RMSD, we scan for protein flexibility/motion by generating samples that are distinct (by RMSD) from the default prediction. 
 
@@ -57,4 +52,4 @@ python -m bioemu.sample \
 --batch-size 10
 ```
 
-For more details on the method and testing, please see [our paper](https://arxiv.org/pdf/2512.03312v1). 
+For more details on the method and testing, please see [our paper](https://arxiv.org/abs/2512.03312v1). 
