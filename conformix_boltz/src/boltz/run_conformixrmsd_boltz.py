@@ -52,32 +52,32 @@ def main():
     )
 
     # --- Core Inputs ---
-    parser.add_argument("--fasta-path", type=Path, required=True, help="Path to the input FASTA file.")
-    parser.add_argument("--out-dir", type=Path, required=True, help="Directory to save all outputs.")
+    parser.add_argument("--fasta_path", type=Path, required=True, help="Path to the input FASTA file.")
+    parser.add_argument("--out_dir", type=Path, required=True, help="Directory to save all outputs.")
 
     # --- Guidance Settings ---
     parser.add_argument(
-        "--structured-regions-only",
+        "--structured_regions_only",
         action=argparse.BooleanOptionalAction,
         default=True,
         help="Guide RMSD on structured regions (alpha-helices/beta-sheets) only. Use --no-structured-regions-only to guide on the full sequence backbone.",
     )
     parser.add_argument(
-        "--subset-residues",
+        "--subset_residues",
         type=str,
         default=None,
-        help="A comma-separated list of residue ranges (e.g., '10-20,45-55') to include in the RMSD calculation. If provided, this subset is used for the RMSD. Can be combined with --structured-regions-only.",
+        help="A comma-separated list of residue ranges (e.g., '10-20,45-55') to include in the RMSD calculation. If provided, this subset is used for the RMSD. Can be combined with --structured_regions_only.",
     )
-    parser.add_argument("--reference-cif", type=Path, default=None, help="Optional path to a reference CIF file for RMSD guidance. If not provided, one will be generated.")
+    parser.add_argument("--reference_cif", type=Path, default=None, help="Optional path to a reference CIF file for RMSD guidance. If not provided, one will be generated.")
 
     # --- Sampling Parameters ---
-    parser.add_argument("--twist-target-start", type=float, default=0.0, help="Start value for the target RMSD in Angstroms.")
-    parser.add_argument("--twist-target-stop", type=float, default=10.0, help="Stop value for the target RMSD.")
-    parser.add_argument("--num-twist-targets", type=int, default=11, help="Number of target RMSD values to sample between start and stop (inclusive).")
-    parser.add_argument("--samples-per-target", type=int, default=3, help="Number of structures to generate for each target value (sets 'diffusion_samples').")
+    parser.add_argument("--twist_target_start", type=float, default=0.0, help="Start value for the target RMSD in Angstroms.")
+    parser.add_argument("--twist_target_stop", type=float, default=10.0, help="Stop value for the target RMSD.")
+    parser.add_argument("--num_twist_targets", type=int, default=11, help="Number of target RMSD values to sample between start and stop (inclusive).")
+    parser.add_argument("--samples_per_target", type=int, default=3, help="Number of structures to generate for each target value (sets 'diffusion_samples').")
     
     # --- Advanced Settings ---
-    parser.add_argument("--twist-strength", type=float, default=15.0, help="Strength parameter for guidance.")
+    parser.add_argument("--twist_strength", type=float, default=15.0, help="Strength parameter for guidance.")
     parser.add_argument("--tstart", type=str, default="200", help="Timestep on which to start applying guidance.")
     parser.add_argument("--tstop", type=str, default="0", help="Timestep on which to stop applying guidance.")
     

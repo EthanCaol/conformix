@@ -10,15 +10,25 @@ For initial exploration, we recommend ConforMix-Boltz.
 
 ConforMix is flexible and offers a number of tunable parameters. To get started, try
 
-```
-git clone https://github.com/drorlab/conformix.git 
+```sh
+git clone https://github.com/EthanCaol/conformix.git 
 pip install conformix/conformix_boltz
 python -m boltz.run_conformixrmsd_boltz \
---fasta_path conformix/examples/P0205.fasta \
---out_dir outputs/conformix_P0205 \
---num_twist_targets 10 \
---samples_per_target 2 \
---structured_regions_only
+    --fasta_path conformix/examples/P0205.fasta \
+    --out_dir outputs/conformix_P0205 \
+    --num_twist_targets 10 \
+    --samples_per_target 1 \
+    --structured_regions_only
+
+
+cd conformix_boltz/src/bolt
+python boltz/run_conformixrmsd_boltz.py \
+    --fasta_path ../../examples/P0205.fasta \
+    --out_dir ../../outputs/conformix_P0205_1 \
+    --subset_residues 1-50,57 \
+    --samples_per_target 1 \
+    --structured_regions_only
+
 ```
 
 This will produce (1) the default Boltz-1 prediction for that FASTA file, (2) ConforMix samples ranging from 0 to 20Å RMSD away from the default prediction, (3) a filtered, sorted trajectory made from those samples that can be viewed in tools like VMD, PyMOL, or ChimeraX. 
@@ -35,21 +45,21 @@ that limits the RMSD calculation to the residue ranges specified. This can be co
 We also provide an implementation of ConforMix-BioEmu. This implementation is less thoroughly tested. We recommend using it for targeted sampling, i.e. when you can provide some input constraints (in the form of a reference structure) and set of residues for RMSD measurement. 
 
 To get started, try
-```
-git clone https://github.com/drorlab/conformix.git
+```sh
+git clone https://github.com/EthanCaol/conformix.git
 pip install conformix/conformix_bioemu
 python -m bioemu.sample \
---sequence DAYAQWLKDGGPSSGRPPPS \
---num_samples 50  \
---output_dir outputs/conformix_bioemu_trp_cage  \
---resample_start 30 \
---twist_rmsd True \
---untwisted_input   \
---rmsd_all_residues True \
---denoiser_type first_order_tds \
---twist_k 10 \
---beta 0.5 \
---batch-size 10
+    --sequence DAYAQWLKDGGPSSGRPPPS \
+    --num_samples 50  \
+    --output_dir outputs/conformix_bioemu_trp_cage  \
+    --resample_start 30 \
+    --twist_rmsd True \
+    --untwisted_input   \
+    --rmsd_all_residues True \
+    --denoiser_type first_order_tds \
+    --twist_k 10 \
+    --beta 0.5 \
+    --batch-size 10
 ```
 
 For more details on the method and testing, please see [our paper](https://arxiv.org/abs/2512.03312v1). 
